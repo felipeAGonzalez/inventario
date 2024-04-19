@@ -1,0 +1,44 @@
+{
+    "name": "Django Docker",
+    "dockerComposeFile": "../docker-compose.yml",
+    "service": "django",
+    "workspaceFolder": "/inventario",
+    "extensions": [
+        "ms-python.python",
+        "batisteo.vscode-django",
+        "ms-vscode.vscode-typescript-tslint-plugin",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "editorconfig.editorconfig",
+        "yzhang.markdown-all-in-one",
+        "PKief.material-icon-theme"
+    ],
+    "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash",
+        "python.linting.pylintEnabled": false,
+        "python.linting.enabled": true,
+        "python.pythonPath": "/usr/local/bin/python",
+        "python.autoComplete.extraPaths": [
+            "/usr/local/lib/python3.9/site-packages"
+        ],
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": true
+        },
+        "files.associations": {
+            "**/*.html": "html",
+            "**/templates/**/*.html": "django-html",
+            "**/templates/**/*": "django-txt",
+            "**/requirements{/**,*}.{txt,in}": "pip-requirements"
+        }
+    },
+    "remoteUser": "root",
+    "forwardPorts": [
+        8000
+    ],
+    "postCreateCommand": "pip install -r requirements.txt",
+    "shutdownAction": "stopCompose",
+    "dockerRunArgs": ["--privileged"],
+    "workspaceMount": "src=/path/to/your/project,dst=/workspace,type=bind,consistency=cached"
+}

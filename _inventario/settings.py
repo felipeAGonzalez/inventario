@@ -11,9 +11,6 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-from datetime import timedelta
-# import sys
-import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-&r=3dk(h$@7rw*bogxjfy!6l4dkcwp@@08vd8f!-&ngq3*!#f0"
+SECRET_KEY = "django-insecure-*(x^6(gpl!&l8&_t%^)11allfrnhq^16ck+z4c-4ta@$#x8v*_"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -40,33 +37,16 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "django_filters",
-    "rest_framework",
-    "rest_framework_simplejwt",
-    "corsheaders",
-    "drf_yasg",
-    "users",
-    "universidad",
-    "plantel",
-    "edificio",
-    "aula",
-    "dispositivo",
-    "aula_dispositivo",
-    "users_universidad",
-    "dispositivo_material",
-    "material",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "inventario.common.middleware.WorkAreaMiddleware",
 ]
 
 ROOT_URLCONF = "inventario.urls"
@@ -90,25 +70,16 @@ TEMPLATES = [
 WSGI_APPLICATION = "inventario.wsgi.application"
 
 
+# Database
+# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-if os.getenv('ENVIRONMENT') == 'development':
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'inventario',
-            'USER': 'postgres',
-            'PASSWORD': 'root',
-            'HOST': 'db',
-            'PORT': '5432',
-        }
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
-    }
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -150,33 +121,3 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-AUTH_USER_MODEL = 'users.Users'
-
-REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
-        "rest_framework.authentication.SessionAuthentication",
-    ],
-    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
-    "DEFAULT_PAGINATION_CLASS": "inventario.common.pagination.BasePagination",
-    "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.IsAuthenticated",
-    ],
-    "PAGE_SIZE": 20,
-    # "EXCEPTION_HANDLER": "inventario.common.custom_exception_handler.custom_exception_handler",
-}
-
-SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60 * 8),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=14),
-}
-
-SWAGGER_SETTINGS = {
-    "DEFAULT_MODEL_RENDERING": "example",
-    "DEFAULT_GENERATOR_CLASS": "inventario.common.schema.CustomOpenAPISchemaGenerator",
-    "DEFAULT_AUTO_SCHEMA_CLASS": "inventario.common.schema.CustomAutoSchema",
-}
-
-CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOW_HEADERS = ["*"]
